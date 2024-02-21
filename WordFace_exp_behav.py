@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" DESCRIPTION:
+""" DESCRIPTION: NADIADIAIDADIADAIDIAA
 This fMRI/MEEG/behavioral experiment displays 3 different types of words 
 (positive, negative, neutral), followed by a break and one of two different 
 emoji faces (happy and fearful). 
