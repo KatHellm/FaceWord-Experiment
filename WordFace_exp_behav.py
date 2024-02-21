@@ -3,7 +3,6 @@
 This fMRI/MEEG/behavioral experiment displays 3 different types of words 
 (positive, negative, neutral), followed by a break and one of two different 
 emoji faces (happy and fearful). 
-Participants have to judge happy or fearful faces with buttonpresses 'e' and 'i'.
 The experiment lasts 5-10 minutes per session (dependent on MEEG/behavioral 
 or fMRI) and each session has 60 trials.
 The script awaits a trigger pulse from the scanner or keyboard with the value "t"
@@ -91,9 +90,9 @@ dur=int(0.7*FRAME_RATE) # duration in seconds multiplied by 60 Hz and made into 
 condition='FaceWord_exp' #Just a variable. If the script can run several exp 
 # then this can be called in GUI. Not relevant here.
 
-# Visual dot for check of stimulus in e.g. MEG
-stimDot = visual.GratingStim(win, size=.5, tex=None, pos=(7, -6),
-                             color=1, mask='circle', autoLog=False)
+
+# LINA: REMOVED STIM.DOT FOR CHECK OF STIMULUS IN E.G. MEG
+
 
 # The word stimulus 
 ypos=0
@@ -189,7 +188,7 @@ def run_condition(condition,exp_start):
         time_flip_word=core.monotonicClock.getTime() #onset of stimulus
         for frame in range(trial['duration_frames']):
             stim_text.draw()
-            stimDot.draw()
+            # LINA: REMOVED STIMDOT.DRAW() HERE
             win.flip()
 
         # Display fixation cross
@@ -204,7 +203,7 @@ def run_condition(condition,exp_start):
         time_flip_img=core.monotonicClock.getTime() #onset of stimulus
         for frame in range(trial['duration_frames']):
             stim_image.draw()
-            stimDot.draw()
+            # LINA: REMOVED STIMDot.DRAW() HERE
             win.flip()
         # Display fixation cross
         offset_img = core.monotonicClock.getTime()  # offset of stimulus
@@ -263,7 +262,6 @@ introText1=[u'In this experiment you will read a word followed by a face', # som
             
             u'Place both hands on keyboard.',
              
-            u'Press "i" with INDEX finger if face is POSITIVE',
             
             u'Press "e" with INDEX finger if face is NEGATIVE',
             
