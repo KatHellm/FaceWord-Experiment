@@ -224,6 +224,7 @@ def run_condition(condition,exp_start):
         trial['duration_measured_img']=offset_img-time_flip_img
 
         try:
+            #KAT:  DEFINING THE KEYLIST TO BE E AND I INSTEAD OF Y AND B
             key, time_key = event.getKeys(keyList=('e','i','escape','q'), timeStamped=True)[0]  # timestamped according to core.monotonicClock.getTime() at keypress. Select the first and only answer.
 
         except IndexError:  #if no responses were given, the getKeys function produces an IndexError
@@ -237,9 +238,9 @@ def run_condition(condition,exp_start):
             trial['key_t']=time_key-exp_start
             trial['rt'] = time_key-time_flip_img
             #check if responses are correct
-            if trial['response']=='e':
+            if trial['response']=='e': #KAT: CHANGING RESPONSE KEY TO REFLECT KEYLIST
                 trial['correct_resp'] = 1 if trial['img']==IMG_N else 0
-            elif trial['response']=='i':
+            elif trial['response']=='i': #KAT: CHANGING RESPONSE KEY TO REFLECT KEYLIST
                 trial['correct_resp'] = 1 if trial['img']==IMG_P else 0
 
             if key in KEYS_QUIT:  # Look at first reponse [0]. Quit everything if quit-key was pressed
@@ -255,6 +256,7 @@ DISPLAY INTRO TEXT AND AWAIT SCANNER TRIGGER
 """    
 textPos= [0, 0]                            # Position of question message
 textHeight=0.6 # height in degrees
+#KAT: CHANGING THE INTRO TEXT TO REFLECT THE NEW KEYS AND REWORDING SLIGHTLY
 introText1=[u'In this experiment you will read a word followed by a face', # some blanks here to create line shifts
                   
             u'Your task is to categorize the face as POSITIVE or NEGATIVE',
