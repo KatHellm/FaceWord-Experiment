@@ -258,11 +258,14 @@ textPos= [0, 0]                            # Position of question message
 textHeight=0.6 # height in degrees
 #KAT: CHANGING THE INTRO TEXT TO REFLECT THE NEW KEYS AND REWORDING SLIGHTLY
 introText1=[u'In this experiment you will read a word followed by a face', # some blanks here to create line shifts
-                  
+
             u'Your task is to categorize the face as POSITIVE or NEGATIVE',
+            
+            u'',
             
             u'Place both hands on keyboard.',
              
+            u'Press "i" with INDEX finger if face is POSITIVE',
             
             u'Press "e" with INDEX finger if face is NEGATIVE',
             
