@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" DESCRIPTION: NADIADIAIDADIADAIDIAA
+""" DESCRIPTION: 
 This fMRI/MEEG/behavioral experiment displays 3 different types of words 
 (positive, negative, neutral), followed by a break and one of two different 
 emoji faces (happy and fearful). 
@@ -50,9 +50,9 @@ GET PARTICIPANT INFO USING GUI
 """
 # Intro-dialogue. Get subject-id and other variables.
 # Save input variables in "V" dictionary (V for "variables")
-V= {'ID':'','exp type':['fMRI','EEG','behavioral'],'session':[1,2,3,4,5,6],'Scan day': 
-    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],'gender':['female','male','other'],'age':'', "Ethnicity":''}
-if not gui.DlgFromDict(V, order=['ID','exp type','Scan day', 'age', 'session','gender']).OK: # dialog box; order is a list of keys 
+V= {'ID':'','exp type':['fMRI','EEG','behavioral'],'session':[1,2,3,4,5,6],'Scan_day': 
+    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],'gender':['female','male','other'],'age':'', "ethnicity":''}
+if not gui.DlgFromDict(V, order=['ID','exp type','Scan_day', 'age', 'session','gender']).OK: # dialog box; order is a list of keys 
     core.quit()
 
 """
@@ -138,8 +138,8 @@ def make_trial_list(condition):
             'ID': V['ID'],
             'age': V['age'],
             'gender': V['gender'],
-            'Ethnicity': V['Ethnicity'],
-            'scan day':V['Scan day'],
+            'ethnicity': V['ethnicity'],
+            'scan_day':V['Scan_day'],
             'condition': condition,
             'session':V['session'],
             'word':words.word[word],
