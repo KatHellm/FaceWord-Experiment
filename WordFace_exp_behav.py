@@ -262,7 +262,7 @@ introText1=[u'In this experiment you read words and look at faces', # some blank
              
             u'Press "i" with INDEX finger if face is POSITIVE',
             
-            u'Press "e" with MIDDLE finger if face is NEGATIVE',
+            u'Press "e" with INDEX finger if face is NEGATIVE',
             
             u'The experiment starts when you press "T"']
 
