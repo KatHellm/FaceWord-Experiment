@@ -1,0 +1,3 @@
+word_score_warriner,onset_word,ID,age,no,gender,condition,duration_measured_img,word_score_pc,delay_frames_before,rt,onset_img,duration_measured_word,offset_word,word,scan day,delay_frames_after,duration_frames,img,word_label,key_t,correct_resp,session,pause_trigger_t,response,offset_img
+3.32,0.5061913749959785,nadia,21,1,female,faceWord_exp,0.33275175000017043,2.3815246085651838,120,,0.907242999994196,0.33886175000225194,0.8450531249982305,bribe,Mon,180,42,image_stim_n.png,neg,,,1,,,1.2399947499943664
+6.47,2.750709833999281,nadia,21,2,female,faceWord_exp,0.331074957997771,-1.0543324261381863,120,,3.1472120839898707,0.34738470800220966,3.0980945420014905,oak,Mon,180,42,image_stim_p.png,pos,,,1,,,3.4782870419876417
