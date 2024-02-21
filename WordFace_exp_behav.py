@@ -3,7 +3,7 @@
 This fMRI/MEEG/behavioral experiment displays 3 different types of words 
 (positive, negative, neutral), followed by a break and one of two different 
 emoji faces (happy and fearful). 
-Participants have to judge happy or fearful faces with buttonpresses 'e' and 'i'.
+Participants have to judge happy or fearful faces with buttonpresses 'y' and 'b'.
 The experiment lasts 5-10 minutes per session (dependent on MEEG/behavioral 
 or fMRI) and each session has 60 trials.
 The script awaits a trigger pulse from the scanner or keyboard with the value "t"
@@ -91,9 +91,9 @@ dur=int(0.7*FRAME_RATE) # duration in seconds multiplied by 60 Hz and made into 
 condition='FaceWord_exp' #Just a variable. If the script can run several exp 
 # then this can be called in GUI. Not relevant here.
 
-# Visual dot for check of stimulus in e.g. MEG
-stimDot = visual.GratingStim(win, size=.5, tex=None, pos=(7, -6),
-                             color=1, mask='circle', autoLog=False)
+
+# LINA: REMOVED STIM.DOT FOR CHECK OF STIMULUS IN E.G. MEG
+
 
 # The word stimulus 
 ypos=0
@@ -189,7 +189,7 @@ def run_condition(condition,exp_start):
         time_flip_word=core.monotonicClock.getTime() #onset of stimulus
         for frame in range(trial['duration_frames']):
             stim_text.draw()
-            stimDot.draw()
+            # LINA: REMOVED STIMDOT.DRAW() HERE
             win.flip()
 
         # Display fixation cross
@@ -204,7 +204,7 @@ def run_condition(condition,exp_start):
         time_flip_img=core.monotonicClock.getTime() #onset of stimulus
         for frame in range(trial['duration_frames']):
             stim_image.draw()
-            stimDot.draw()
+            # LINA: REMOVED STIMDot.DRAW() HERE
             win.flip()
         # Display fixation cross
         offset_img = core.monotonicClock.getTime()  # offset of stimulus
@@ -224,7 +224,7 @@ def run_condition(condition,exp_start):
         trial['duration_measured_img']=offset_img-time_flip_img
 
         try:
-            key, time_key = event.getKeys(keyList=('e','i','escape','q'), timeStamped=True)[0]  # timestamped according to core.monotonicClock.getTime() at keypress. Select the first and only answer.
+            key, time_key = event.getKeys(keyList=('y','b','escape','q'), timeStamped=True)[0]  # timestamped according to core.monotonicClock.getTime() at keypress. Select the first and only answer.
 
         except IndexError:  #if no responses were given, the getKeys function produces an IndexError
             trial['response']=''
@@ -237,9 +237,9 @@ def run_condition(condition,exp_start):
             trial['key_t']=time_key-exp_start
             trial['rt'] = time_key-time_flip_img
             #check if responses are correct
-            if trial['response']=='e':
+            if trial['response']=='y':
                 trial['correct_resp'] = 1 if trial['img']==IMG_N else 0
-            elif trial['response']=='i':
+            elif trial['response']=='b':
                 trial['correct_resp'] = 1 if trial['img']==IMG_P else 0
 
             if key in KEYS_QUIT:  # Look at first reponse [0]. Quit everything if quit-key was pressed
@@ -259,9 +259,9 @@ introText1=[u'In this experiment you read words and look at faces', # some blank
                   
             u'Words can be used to predict facial expression',
              
-            u'Press "i" with INDEX finger if face is POSITIVE',
+            u'Press "B" with INDEX finger if face is POSITIVE',
             
-            u'Press "e" with MIDDLE finger if face is NEGATIVE',
+            u'Press "Y" with MIDDLE finger if face is NEGATIVE',
             
             u'The experiment starts when you press "T"']
 
