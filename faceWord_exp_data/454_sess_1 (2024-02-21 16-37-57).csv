@@ -1,0 +1,2 @@
+word,correct_resp,img,duration_frames,age,pause_trigger_t,key_t,duration_measured_word,Ethnicity,gender,scan day,onset_img,offset_img,delay_frames_before,word_score_warriner,response,session,duration_measured_img,offset_word,delay_frames_after,word_label,rt,no,ID,onset_word,word_score_pc,condition
+bribe,1,image_stim_n.png,42,,,1.4411871669872198,0.3377832919941284,,female,Mon,0.8904892089922214,1.2238582919962937,120,3.32,e,1,0.3333690830040723,0.83227120898664,180,neg,0.5506979579949984,1,454,0.4944879169925116,2.3815246085651838,faceWord_exp

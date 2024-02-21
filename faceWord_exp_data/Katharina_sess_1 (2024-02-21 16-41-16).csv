@@ -1,0 +1,3 @@
+ID,condition,onset_word,word,key_t,word_score_warriner,response,duration_frames,session,age,pause_trigger_t,no,delay_frames_before,duration_measured_img,Ethnicity,rt,correct_resp,offset_word,gender,onset_img,delay_frames_after,word_label,img,scan day,duration_measured_word,word_score_pc,offset_img
+Katharina,faceWord_exp,0.49596187499992084,fiddle,,5.05,,42,1,21,,1,180,0.3338090000033844,Japanese,,,0.8380202920088777,female,0.9042035419988679,120,neu,image_stim_p.png,Mon,0.3420584170089569,-1.0601571884744718,1.2380125420022523
+Katharina,faceWord_exp,2.239358959006495,love,,8.0,,42,1,21,,2,120,0.3281963750050636,Japanese,,,2.5888502090092516,female,2.636990541999694,180,pos,image_stim_p.png,Mon,0.3494912500027567,-2.40140153221556,2.9651869170047576

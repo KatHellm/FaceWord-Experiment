@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-""" DESCRIPTION: NADIADIAIDADIADAIDIAA
+""" DESCRIPTION: 
 This fMRI/MEEG/behavioral experiment displays 3 different types of words 
 (positive, negative, neutral), followed by a break and one of two different 
 emoji faces (happy and fearful). 
+Participants have to judge happy or fearful faces with buttonpresses 'e' and 'i'.
 The experiment lasts 5-10 minutes per session (dependent on MEEG/behavioral 
 or fMRI) and each session has 60 trials.
 The script awaits a trigger pulse from the scanner or keyboard with the value "t"
@@ -49,9 +50,9 @@ GET PARTICIPANT INFO USING GUI
 """
 # Intro-dialogue. Get subject-id and other variables.
 # Save input variables in "V" dictionary (V for "variables")
-V= {'ID':'','Exp type':['fMRI','EEG','behavioral'],'Session':[1,2,3,4,5,6],'Scan day': 
-    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],'Gender':['female','male','other'],'Age':'','Ethnicity':''} #Added ethnicity and edited for big start letters
-if not gui.DlgFromDict(V, order=['ID','Exp type','Scan day', 'Age', 'Session','Gender','Ethnicity']).OK: # dialog box; order is a list of keys 
+V= {'ID':'','exp type':['fMRI','EEG','behavioral'],'session':[1,2,3,4,5,6],'Scan_day': 
+    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],'gender':['female','male','other'],'age':'', "ethnicity":''}
+if not gui.DlgFromDict(V, order=['ID','exp type','Scan_day', 'age', 'session','gender']).OK: # dialog box; order is a list of keys 
     core.quit()
 
 """
@@ -75,11 +76,11 @@ STIMULI
 #EXPERIMENTAL DETAILS
 #Load word file
 wordlist=pd.read_csv('wordlist.txt', sep='\t')
-words=wordlist[wordlist.session==int(V['Session'])]
+words=wordlist[wordlist.session==int(V['session'])]
 words = words.reset_index()
 del words['index']
 
-#IMAGE FILES
+#iMAGE FILES
 IMG_P='image_stim_p.png' #yellow positive (aka. happy)
 IMG_N='image_stim_n.png' #yellow negative (aka. fearful)
 faces=(IMG_P,IMG_N)
@@ -90,9 +91,9 @@ dur=int(0.7*FRAME_RATE) # duration in seconds multiplied by 60 Hz and made into 
 condition='FaceWord_exp' #Just a variable. If the script can run several exp 
 # then this can be called in GUI. Not relevant here.
 
-
-# LINA: REMOVED STIM.DOT FOR CHECK OF STIMULUS IN E.G. MEG
-
+# Visual dot for check of stimulus in e.g. MEG
+stimDot = visual.GratingStim(win, size=.5, tex=None, pos=(7, -6),
+                             color=1, mask='circle', autoLog=False)
 
 # The word stimulus 
 ypos=0
@@ -114,7 +115,7 @@ KEYS_QUIT = ['escape','q']  # Keys that quits the experiment
 KEYS_trigger=['t'] # The MR scanner sends a "t" to notify that it is starting
 
    # Prepare a csv log-file using the ppc3 script
-ID_sess=  str(V['ID']) + '_sess_' + str(V['Session'])
+ID_sess=  str(V['ID']) + '_sess_' + str(V['session'])
 writer = ppc.csv_writer(ID_sess, folder=SAVE_FOLDER)  # writer.write(trial) will write individual trials with low latency
 
 """ FUNCTIONS FOR EXPERIMENTAL LOOP"""
@@ -135,12 +136,12 @@ def make_trial_list(condition):
         # Add a dictionary for every trial
         trial_list += [{
             'ID': V['ID'],
-            'Age': V['Age'],
-            'Gender': V['Gender'],
-            'Ethnicity':V['Ethnicity'],
-            'Scan day':V['Scan day'],
+            'age': V['age'],
+            'gender': V['gender'],
+            'ethnicity': V['ethnicity'],
+            'scan_day':V['Scan_day'],
             'condition': condition,
-            'Session':V['Session'],
+            'session':V['session'],
             'word':words.word[word],
             'word_label':words.label[word],
             'word_score_pc':words.score_pc[word],
@@ -189,7 +190,7 @@ def run_condition(condition,exp_start):
         time_flip_word=core.monotonicClock.getTime() #onset of stimulus
         for frame in range(trial['duration_frames']):
             stim_text.draw()
-            # LINA: REMOVED STIMDOT.DRAW() HERE
+            stimDot.draw()
             win.flip()
 
         # Display fixation cross
@@ -204,7 +205,7 @@ def run_condition(condition,exp_start):
         time_flip_img=core.monotonicClock.getTime() #onset of stimulus
         for frame in range(trial['duration_frames']):
             stim_image.draw()
-            # LINA: REMOVED STIMDot.DRAW() HERE
+            stimDot.draw()
             win.flip()
         # Display fixation cross
         offset_img = core.monotonicClock.getTime()  # offset of stimulus
@@ -224,7 +225,6 @@ def run_condition(condition,exp_start):
         trial['duration_measured_img']=offset_img-time_flip_img
 
         try:
-            #KAT:  DEFINING THE KEYLIST TO BE E AND I INSTEAD OF Y AND B
             key, time_key = event.getKeys(keyList=('e','i','escape','q'), timeStamped=True)[0]  # timestamped according to core.monotonicClock.getTime() at keypress. Select the first and only answer.
 
         except IndexError:  #if no responses were given, the getKeys function produces an IndexError
@@ -238,9 +238,9 @@ def run_condition(condition,exp_start):
             trial['key_t']=time_key-exp_start
             trial['rt'] = time_key-time_flip_img
             #check if responses are correct
-            if trial['response']=='e': #KAT: CHANGING RESPONSE KEY TO REFLECT KEYLIST
+            if trial['response']=='e':
                 trial['correct_resp'] = 1 if trial['img']==IMG_N else 0
-            elif trial['response']=='i': #KAT: CHANGING RESPONSE KEY TO REFLECT KEYLIST
+            elif trial['response']=='i':
                 trial['correct_resp'] = 1 if trial['img']==IMG_P else 0
 
             if key in KEYS_QUIT:  # Look at first reponse [0]. Quit everything if quit-key was pressed
@@ -256,18 +256,13 @@ DISPLAY INTRO TEXT AND AWAIT SCANNER TRIGGER
 """    
 textPos= [0, 0]                            # Position of question message
 textHeight=0.6 # height in degrees
-#KAT: CHANGING THE INTRO TEXT TO REFLECT THE NEW KEYS AND REWORDING SLIGHTLY
-introText1=[u'In this experiment you will read a word followed by a face', # some blanks here to create line shifts
-
-            u'Your task is to categorize the face as POSITIVE or NEGATIVE',
-            
-            u'',
-            
-            u'Place both hands on keyboard.',
+introText1=[u'In this experiment you read words and look at faces', # some blanks here to create line shifts
+                  
+            u'Words can be used to predict facial expression',
              
             u'Press "i" with INDEX finger if face is POSITIVE',
             
-            u'Press "e" with INDEX finger if face is NEGATIVE',
+            u'Press "e" with MIDDLE finger if face is NEGATIVE',
             
             u'The experiment starts when you press "T"']
 
