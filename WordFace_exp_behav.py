@@ -50,9 +50,9 @@ GET PARTICIPANT INFO USING GUI
 """
 # Intro-dialogue. Get subject-id and other variables.
 # Save input variables in "V" dictionary (V for "variables")
-V= {'ID':'','exp type':['fMRI','EEG','behavioral'],'session':[1,2,3,4,5,6],'Scan day': 
-    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],'gender':['female','male','other'],'age':''}
-if not gui.DlgFromDict(V, order=['ID','exp type','Scan day', 'age', 'session','gender']).OK: # dialog box; order is a list of keys 
+V= {'ID':'','Exp type':['fMRI','EEG','behavioral'],'Session':[1,2,3,4,5,6],'Scan day': 
+    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],'Gender':['female','male','other'],'Age':'','Ethnicity':''} #Added ethnicity and edited for big start letters
+if not gui.DlgFromDict(V, order=['ID','Exp type','Scan day', 'Age', 'Session','Gender','Ethnicity']).OK: # dialog box; order is a list of keys 
     core.quit()
 
 """
@@ -76,11 +76,11 @@ STIMULI
 #EXPERIMENTAL DETAILS
 #Load word file
 wordlist=pd.read_csv('wordlist.txt', sep='\t')
-words=wordlist[wordlist.session==int(V['session'])]
+words=wordlist[wordlist.session==int(V['Session'])]
 words = words.reset_index()
 del words['index']
 
-#iMAGE FILES
+#IMAGE FILES
 IMG_P='image_stim_p.png' #yellow positive (aka. happy)
 IMG_N='image_stim_n.png' #yellow negative (aka. fearful)
 faces=(IMG_P,IMG_N)
@@ -115,7 +115,7 @@ KEYS_QUIT = ['escape','q']  # Keys that quits the experiment
 KEYS_trigger=['t'] # The MR scanner sends a "t" to notify that it is starting
 
    # Prepare a csv log-file using the ppc3 script
-ID_sess=  str(V['ID']) + '_sess_' + str(V['session'])
+ID_sess=  str(V['ID']) + '_sess_' + str(V['Session'])
 writer = ppc.csv_writer(ID_sess, folder=SAVE_FOLDER)  # writer.write(trial) will write individual trials with low latency
 
 """ FUNCTIONS FOR EXPERIMENTAL LOOP"""
@@ -136,11 +136,12 @@ def make_trial_list(condition):
         # Add a dictionary for every trial
         trial_list += [{
             'ID': V['ID'],
-            'age': V['age'],
-            'gender': V['gender'],
-            'scan day':V['Scan day'],
+            'Age': V['Age'],
+            'Gender': V['Gender'],
+            'Ethnicity':V['Ethnicity'],
+            'Scan day':V['Scan day'],
             'condition': condition,
-            'session':V['session'],
+            'Session':V['Session'],
             'word':words.word[word],
             'word_label':words.label[word],
             'word_score_pc':words.score_pc[word],
